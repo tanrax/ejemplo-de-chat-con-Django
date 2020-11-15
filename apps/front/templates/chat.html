@@ -25,7 +25,7 @@
 
                 </aside>
                 <main class="column">
-                     
+
                     <!-- Mensajes -->
                     <section id="mensajes"></section>
                     <!-- Fin Mensajes -->
@@ -53,6 +53,7 @@
          /*
           * FUNCIONES
           */
+
          function anyadirNuevoMensajeAlHTML(nombre, texto, propio = false) {
              // Contenedor
              const MI_CONTENEDOR = document.createElement('div');
@@ -101,13 +102,9 @@
 
          // Recibir mensaje
          CHAT_SOCKET.addEventListener('message', (event) => {
-              console.log('Recibido nuevo mensaje');
-              const miNuevaData = JSON.parse(event.data);
-              // Add message to View
-              this.addMessage(
-                  myData.member_send === this.$store.state.info_user.id,
-                  myData.text
-              );
+             console.log('Recibido nuevo mensaje');
+             const MI_NUEVA_DATA = JSON.parse(event.data);
+             anyadirNuevoMensajeAlHTML(MI_NUEVA_DATA.nombre, MI_NUEVA_DATA.texto, false);
           });
 
          // Enviar mensaje cuando se pulsa en Enviar
