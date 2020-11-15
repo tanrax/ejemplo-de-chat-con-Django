@@ -44,7 +44,7 @@
           * VARIABLES
           */
          const SALA_CHAT = 'python';
-         const CHAT_SOCKET = new WebSocket('ws://localhost:8000/ws/chat/' + SALA_CHAT);
+         const CHAT_SOCKET = new WebSocket('ws://localhost:8000/ws/chat/' + SALA_CHAT + '/');
          const CAMPO_NOMBRE = document.querySelector('#nombre');
          const MENSAJES = document.querySelector('#mensajes');
          const CAMPO_TEXTO = document.querySelector('#texto');
