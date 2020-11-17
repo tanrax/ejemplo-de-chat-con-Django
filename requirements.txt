@@ -1,0 +1,6 @@
+# Servidor asincrono para Django
+daphne==2.4.1
+# Channels
+channels==2.4.0
+# Conector de Redis para Channels
+channels_redis
