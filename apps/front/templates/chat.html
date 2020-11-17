@@ -5,8 +5,6 @@
         <title>Chat</title>
         <!-- Spectre CSS -->
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
     </head>
     <body>
         <div class="container grid-md">
@@ -43,17 +41,26 @@
          /*
           * VARIABLES
           */
+         // Define el nombre de la sala
          const SALA_CHAT = 'python';
+         // Conecta con WebSockets
          const CHAT_SOCKET = new WebSocket('ws://localhost:8000/ws/chat/' + SALA_CHAT + '/');
+         // Captura el campo con el nombre del usuario
          const CAMPO_NOMBRE = document.querySelector('#nombre');
+         // Captura el contenedor que posee todos los mensajes
          const MENSAJES = document.querySelector('#mensajes');
+         // Captura el campo con el nuevo texto
          const CAMPO_TEXTO = document.querySelector('#texto');
+         // Boton para enviar mensaje
          const BOTON_ENVIAR = document.querySelector('#enviar');
 
          /*
           * FUNCIONES
           */
 
+         /**
+          * Método que añade un nuevo mensaje en el HTML (#mensajes)
+          */
          function anyadirNuevoMensajeAlHTML(nombre, texto, propio = false) {
              // Contenedor
              const MI_CONTENEDOR = document.createElement('div');
@@ -72,16 +79,17 @@
              MENSAJES.appendChild(MI_CONTENEDOR);
          }
 
-         function enviarNuevoMessage() {
+         /**
+          * Método que envia el mensaje al consumer por medio de WebSockets
+          */
+         function enviarNuevoMensaje() {
              // Envia al WebSocket un nuevo mensaje
              CHAT_SOCKET.send(JSON.stringify({
-                 nombre: CAMPO_NOMBRE.value,
-                 texto: CAMPO_TEXTO.value,
-                 fechaCreacion: Date.now()
+                 name: CAMPO_NOMBRE.value,
+                 text: CAMPO_TEXTO.value,
+                 createdAt: Date.now()
              }));
-             // Añadimos el nuevo mensaje al HTML
-             anyadirNuevoMensajeAlHTML(CAMPO_NOMBRE.value, CAMPO_TEXTO.value, true);
-             // Limpiamos el textarea
+             // Limpiamos el campo donde hemos escrito
              CAMPO_TEXTO.value = '';
              // Le volvemos a dar el foco para escribir otro mensaje
              CAMPO_TEXTO.focus();
@@ -104,12 +112,14 @@
          CHAT_SOCKET.addEventListener('message', (event) => {
              console.log('Recibido nuevo mensaje');
              const MI_NUEVA_DATA = JSON.parse(event.data);
-             anyadirNuevoMensajeAlHTML(MI_NUEVA_DATA.nombre, MI_NUEVA_DATA.texto, false);
+             anyadirNuevoMensajeAlHTML(MI_NUEVA_DATA.name, MI_NUEVA_DATA.text, MI_NUEVA_DATA.name === CAMPO_NOMBRE.value);
           });
 
-         // Enviar mensaje cuando se pulsa en Enviar
-         BOTON_ENVIAR.addEventListener('click', enviarNuevoMessage);
+         // Enviar mensaje cuando se pulsa en el botón Enviar
+         BOTON_ENVIAR.addEventListener('click', enviarNuevoMensaje);
 
+         // Enviar mensaje cuando se pulsa en el teclado Enter
+         CAMPO_TEXTO.addEventListener('keyup', (e) => e.keyCode === 13 ? enviarNuevoMensaje() : false);
         </script>
     </body>
 </html>
