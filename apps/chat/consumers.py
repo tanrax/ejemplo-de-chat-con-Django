@@ -40,7 +40,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def chat_message(self, event):
         ''' Recibimos información de la sala '''
-        print(self.channel_layer.group_channels('chat_python'))
         name = event["name"]
         text = event["text"]
 
