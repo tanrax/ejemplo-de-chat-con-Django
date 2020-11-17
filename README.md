@@ -6,6 +6,8 @@
 - Preparado para salas individuales.
 - Minimalismo en Front-End con Javascript Vainilla.
 
+![demo](media/screenshot.png)
+
 ## Instalar
 
 ``` shell
@@ -23,7 +25,7 @@ docker-compose up -d
 ## Ejecutar
 
 ``` shell
-venv/bin/daphne  -b localhost -p 8000 mi_web.asgi:application
+venv/bin/daphne -b localhost -p 8000 mi_web.asgi:application
 ```
 
-Abre en tu navegador en ```localhost:8000```.
+Abre en tu navegador en ```127.0.0.1:8000```.
