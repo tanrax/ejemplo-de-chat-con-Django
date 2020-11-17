@@ -27,7 +27,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         name = text_data_json["name"]
         text = text_data_json["text"]
-        created_at = text_data_json["createdAt"]
 
         # Enviamos el mensaje a la sala
         await self.channel_layer.group_send(
@@ -35,16 +34,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 "type": "chat_message",
                 "name": name,
-                "text": text,
-                "created_at": created_at,
+                "text": text
             },
         )
 
     async def chat_message(self, event):
         ''' Recibimos información de la sala '''
+        print(self.channel_layer.group_channels('chat_python'))
         name = event["name"]
         text = event["text"]
-        created_at = event["created_at"]
 
         # Send message to WebSocket
         await self.send(
@@ -52,8 +50,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 {
                     "type": "chat_message",
                     "name": name,
-                    "text": text,
-                    "created_at": created_at
+                    "text": text
                 }
             )
         )
