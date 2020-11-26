@@ -1,5 +1,9 @@
 # Ejemplo de Chat con Django
 
+Dispones de un [tutorial](https://programadorwebvalencia.com/django-chat-usando-websockets-con-salas-y-async/) que explica como construir el código de este repositorio, paso a paso.
+
+## Capacidades
+
 - Asíncrono.
 - Channels.
 - Integración con Redis.
